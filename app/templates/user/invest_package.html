@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}Invest in {{ package.name }} - {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 py-8 px-4 min-h-screen">
+  <div class="max-w-4xl mx-auto">
+    <!-- Back button with improved styling -->
+    <div class="mb-8">
+      <a href="{{ url_for('user.invest') }}" class="inline-flex items-center text-gray-600 hover:text-gray-900 bg-white rounded-lg px-4 py-2 shadow-sm border border-gray-200 transition-colors duration-150">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        Back to Investment Packages
+      </a>
+    </div>
+    
+    <!-- Main content card with enhanced styling -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 mb-8">
+      <!-- Premium header with gradient background -->
+      <div class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white p-8 relative overflow-hidden">
+        <div class="relative z-10">
+          <div class="flex items-center">
+            <div class="mr-4 bg-white bg-opacity-20 p-3 rounded-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <h1 class="text-3xl font-bold">{{ package.name }}</h1>
+              <p class="text-blue-100 mt-1">Investment Package</p>
+            </div>
+          </div>
+          
+          <!-- Key metrics in header -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+            <div class="bg-white bg-opacity-10 rounded-lg p-4">
+              <p class="text-blue-100 text-sm">Expected ROI</p>
+              <p class="text-2xl font-bold text-white mt-1">{{ package.expected_roi }}%</p>
+            </div>
+            <div class="bg-white bg-opacity-10 rounded-lg p-4">
+              <p class="text-blue-100 text-sm">Duration</p>
+              <p class="text-2xl font-bold text-white mt-1">{{ package.duration }} days</p>
+            </div>
+            <div class="bg-white bg-opacity-10 rounded-lg p-4">
+              <p class="text-blue-100 text-sm">Min. Investment</p>
+              <p class="text-2xl font-bold text-white mt-1">{{ format_currency(package.min_investment) }}</p>
+            </div>
+            <div class="bg-white bg-opacity-10 rounded-lg p-4">
+              <p class="text-blue-100 text-sm">Max. Investment</p>
+              <p class="text-2xl font-bold text-white mt-1">{{ format_currency(package.max_investment) if package.max_investment else 'Unlimited' }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Decorative elements for header -->
+        <div class="absolute top-0 right-0 w-40 h-40 bg-white bg-opacity-10 rounded-full -mt-16 -mr-16"></div>
+        <div class="absolute bottom-0 left-0 w-24 h-24 bg-white bg-opacity-10 rounded-full -mb-12 -ml-12"></div>
+      </div>
+      
+      <!-- Package details with clean layout -->
+      <div class="p-8">
+        <div class="mb-12">
+          <h2 class="text-xl font-bold text-gray-900 mb-4">About This Package</h2>
+          <p class="text-gray-700 text-lg leading-relaxed">{{ package.description }}</p>
+        </div>
+        
+        <!-- Expected returns section with visual enhancement -->
+        <div class="mb-12">
+          <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            Expected Returns
+          </h2>
+          
+          <!-- Investment benefit card -->
+          <div class="bg-gradient-to-br from-green-50 to-blue-50 rounded-xl p-6 border border-green-100 mb-6">
+            <div class="flex md:items-center flex-col md:flex-row">
+              <div class="bg-green-500 text-white p-4 rounded-lg mb-4 md:mb-0 md:mr-6 flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Investment Projection</h3>
+                <p class="text-gray-700">
+                  With the minimum investment of <span class="font-semibold">{{ format_currency(package.min_investment) }}</span>, you can expect to earn approximately <span class="font-semibold text-green-600">{{ format_currency(expected_return) }}</span> in returns over the {{ package.duration }}-day investment period.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Additional benefits cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+              <div class="flex items-start">
+                <div class="bg-blue-100 p-2 rounded-lg mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900 mb-2">Risk Management</h3>
+                  <p class="text-sm text-gray-600">
+                    Our expert team carefully manages this investment to balance potential returns with minimized risk.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+              <div class="flex items-start">
+                <div class="bg-purple-100 p-2 rounded-lg mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900 mb-2">Portfolio Diversification</h3>
+                  <p class="text-sm text-gray-600">
+                    This package helps diversify your investment portfolio across multiple asset classes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Investment form with enhanced styling -->
+        <div class="bg-gray-50 rounded-xl p-8 border border-gray-200">
+          <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Make Your Investment
+          </h2>
+          
+          <!-- Available balance card -->
+          <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm mb-8">
+            <div class="flex justify-between items-center">
+              <div>
+                <span class="text-gray-500 text-sm">Available Balance</span>
+                <div class="text-2xl font-bold text-gray-900">{{ format_currency(current_user.wallet.balance) }}</div>
+              </div>
+              <a href="{{ url_for('user.wallet') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-150 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Add Funds
+              </a>
+            </div>
+          </div>
+          
+          <!-- Investment form -->
+          <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            
+            <div class="mb-8">
+              <label for="amount" class="block text-gray-700 font-medium mb-2">{{ form.amount.label }}</label>
+              <div class="relative mt-1 rounded-lg shadow-sm">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm">₹</span>
+                </div>
+                {{ form.amount(class="w-full pl-7 pr-12 py-3 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-lg", placeholder="Enter investment amount", min=package.min_investment, max=package.max_investment if package.max_investment else "") }}
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm">USD</span>
+                </div>
+              </div>
+              <div class="mt-2 flex justify-between text-sm text-gray-500">
+                <span>Minimum: {{ format_currency(package.min_investment) }}</span>
+                <span>Maximum: {{ format_currency(package.max_investment) if package.max_investment else 'Unlimited' }}</span>
+              </div>
+              {% for error in form.amount.errors %}
+                <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+              {% endfor %}
+            </div>
+            
+            <!-- Important note with enhanced styling -->
+            <div class="mb-8 bg-amber-50 rounded-xl p-6 border border-amber-200">
+              <div class="flex items-start">
+                <div class="flex-shrink-0 mt-0.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <h3 class="text-sm font-medium text-amber-800">Important Information</h3>
+                  <div class="mt-2 text-sm text-amber-700">
+                    <p>By proceeding with this investment, you agree to lock your funds for the duration of <strong>{{ package.duration }} days</strong>. Early withdrawal may be subject to penalties.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Submit button with high visibility -->
+            <button type="submit" class="w-full bg-black hover:bg-gray-800 text-white font-bold py-4 px-6 rounded-xl shadow-md transition-colors duration-150 flex items-center justify-center text-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+              Confirm Investment
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

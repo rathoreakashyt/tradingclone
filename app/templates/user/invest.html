@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}Invest - {{ super() }}{% endblock %}
+
+{% block content %}
+<div>
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold">Investment Opportunities</h1>
+        <a href="{{ url_for('user.roi') }}" class="flex items-center text-blue-600 hover:text-blue-800">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            View My Returns
+        </a>
+    </div>
+    
+    <!-- Available Balance Card -->
+    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl shadow-md p-6 mb-8 flex justify-between items-center">
+        <div>
+            <h2 class="text-gray-700 mb-1">Available Balance</h2>
+            <div class="text-2xl font-bold text-blue-700">{{ format_currency(current_user.wallet.balance) }}</div>
+        </div>
+        <a href="{{ url_for('user.wallet') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition shadow">Add Funds</a>
+    </div>
+    
+    <!-- Featured Package -->
+    {% if packages %}
+        {% set feature = packages|first %}
+        <div class="mb-12 bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="md:flex">
+                <div class="md:w-2/3 p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold">Featured Investment Package</h2>
+                            <div class="text-sm text-blue-600">Limited time offer</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold mb-3">{{ feature.name }}</h3>
+                    <p class="text-gray-600 mb-6">{{ feature.description }}</p>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <div class="text-gray-500 text-sm">Min. Investment</div>
+                            <div class="font-bold">{{ format_currency(feature.min_investment) }}</div>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <div class="text-gray-500 text-sm">Expected ROI</div>
+                            <div class="font-bold text-green-600">{{ feature.expected_roi }}%</div>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <div class="text-gray-500 text-sm">Duration</div>
+                            <div class="font-bold">{{ feature.duration }} days</div>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <div class="text-gray-500 text-sm">Risk Level</div>
+                            <div class="font-bold">
+                                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Moderate</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="{{ url_for('user.invest_package', package_id=feature.id) }}" class="inline-block px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition shadow-md">Invest Now</a>
+                </div>
+                
+                <div class="md:w-1/3 bg-gradient-to-br from-blue-500 to-blue-700 text-white flex flex-col justify-center p-8">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold mb-2">{{ feature.expected_roi }}%</div>
+                        <div class="uppercase text-blue-100 tracking-wide">Expected Return</div>
+                        <div class="mt-6 mb-3 border-t border-b border-blue-400 py-2">
+                            <div class="text-sm text-blue-100">Investment Period</div>
+                            <div class="font-medium">{{ feature.duration }} days</div>
+                        </div>
+                        <div class="text-sm text-blue-100">Minimum Investment</div>
+                        <div class="font-medium">{{ format_currency(feature.min_investment) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    <!-- Investment Packages -->
+    <div class="mb-12">
+        <h2 class="text-xl font-bold mb-6">All Investment Packages</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for package in packages %}
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:transform hover:scale-105">
+                    <div class="bg-blue-{% if loop.index == 1 %}500{% elif loop.index == 2 %}600{% else %}700{% endif %} h-2"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3">{{ package.name }}</h3>
+                        <p class="text-gray-600 mb-6 h-24 overflow-hidden">{{ package.description }}</p>
+                        
+                        <div class="grid grid-cols-2 gap-3 mb-6">
+                            <div>
+                                <div class="text-gray-500 text-sm">Min. Investment</div>
+                                <div class="font-bold">{{ format_currency(package.min_investment) }}</div>
+                            </div>
+                            <div>
+                                <div class="text-gray-500 text-sm">ROI</div>
+                                <div class="font-bold text-green-600">{{ package.expected_roi }}%</div>
+                            </div>
+                            <div>
+                                <div class="text-gray-500 text-sm">Duration</div>
+                                <div class="font-bold">{{ package.duration }} days</div>
+                            </div>
+                            <div>
+                                <div class="text-gray-500 text-sm">Status</div>
+                                <div class="font-bold">
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Active</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="{{ url_for('user.invest_package', package_id=package.id) }}" class="block w-full text-center bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition shadow">Invest Now</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-span-3 bg-white rounded-lg shadow-md p-8 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 class="text-xl font-bold mb-2">No Packages Available</h3>
+                    <p class="text-gray-500 mb-4">There are currently no investment packages available.</p>
+                    <p class="text-gray-700">Please check back later for new investment opportunities.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Investment Guide -->
+    <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <h2 class="text-xl font-bold mb-6">Investment Guide</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="relative pl-12">
+                <div class="absolute top-0 left-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold">1</div>
+                <h3 class="font-bold text-lg mb-2">Choose a Package</h3>
+                <p class="text-gray-600">Browse our investment packages and select one that aligns with your financial goals and risk tolerance.</p>
+            </div>
+            <div class="relative pl-12">
+                <div class="absolute top-0 left-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold">2</div>
+                <h3 class="font-bold text-lg mb-2">Invest Your Funds</h3>
+                <p class="text-gray-600">Decide how much you want to invest and confirm your investment. Funds will be deducted from your wallet.</p>
+            </div>
+            <div class="relative pl-12">
+                <div class="absolute top-0 left-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold">3</div>
+                <h3 class="font-bold text-lg mb-2">Track Your Returns</h3>
+                <p class="text-gray-600">Monitor your investment performance and returns from your dashboard. Profits are paid out at the end of the investment term.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FAQ Section -->
+    <div class="bg-white rounded-xl shadow-lg p-8">
+        <h2 class="text-xl font-bold mb-6">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+            <div class="border-b border-gray-200 pb-4">
+                <button class="flex justify-between items-center w-full text-left font-medium">
+                    <span>What is the minimum investment amount?</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div class="mt-2 text-gray-600">
+                    The minimum investment amount varies by package, starting from as low as ₹1,000 for our Starter Package. Each package is designed to cater to different investment capacities and financial goals.
+                </div>
+            </div>
+            <div class="border-b border-gray-200 pb-4">
+                <button class="flex justify-between items-center w-full text-left font-medium">
+                    <span>How is the return on investment calculated?</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div class="mt-2 text-gray-600">
+                    ROI is calculated based on the expected percentage return over the investment period. For example, a 12% ROI on a ₹5,000 investment over 90 days would yield approximately ₹150 in profits.
+                </div>
+            </div>
+            <div class="border-b border-gray-200 pb-4">
+                <button class="flex justify-between items-center w-full text-left font-medium">
+                    <span>Can I withdraw my investment early?</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div class="mt-2 text-gray-600">
+                    While early withdrawals are possible, they may be subject to penalties depending on the investment package and timing. We recommend completing the full investment term for optimal returns.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

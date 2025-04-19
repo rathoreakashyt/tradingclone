@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Home - {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-xl shadow-2xl overflow-hidden mb-12">
+        <div class="md:flex">
+            <div class="p-8 md:w-1/2 flex flex-col justify-center">
+                <h1 class="text-4xl font-bold mb-4 leading-tight">Invest with Confidence</h1>
+                <p class="text-xl mb-8 opacity-90">Join thousands of investors growing their wealth with our platform. Start your investment journey today with professional guidance.</p>
+                <div class="space-x-4">
+                    <a href="{{ url_for('auth.register') }}" class="bg-white text-blue-700 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition shadow-md">Get Started</a>
+                    <a href="{{ url_for('main.about') }}" class="bg-transparent border-2 border-white py-3 px-8 rounded-lg hover:bg-white hover:text-blue-700 transition">Learn More</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 bg-blue-700 flex items-center justify-center p-8">
+                <div class="text-center">
+                    <div class="text-5xl font-bold mb-2">15%</div>
+                    <div class="text-xl">Average Annual Return</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div class="bg-white rounded-lg shadow-lg p-6 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl border-t-4 border-blue-500">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-0">High Returns</h3>
+            </div>
+            <p class="text-gray-600">Our investment strategies consistently outperform market averages, providing you with superior returns.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg p-6 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl border-t-4 border-blue-500">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-0">Secure Platform</h3>
+            </div>
+            <p class="text-gray-600">Your investments are protected with bank-level security. We implement the latest security measures.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg p-6 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl border-t-4 border-blue-500">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-0">Expert Analysis</h3>
+            </div>
+            <p class="text-gray-600">Our team of financial experts analyzes market trends to optimize investment strategies and maximize returns.</p>
+        </div>
+    </div>
+
+    <!-- Investment Packages Preview -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-center mb-10">Popular Investment Packages</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-lg shadow-lg transition-all duration-300 hover:shadow-2xl border border-gray-100">
+                <div class="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center font-bold text-2xl mb-6 mx-auto">S</div>
+                <h3 class="text-xl font-bold mb-4 text-center">Starter Package</h3>
+                <p class="text-gray-600 mb-6 text-center">Perfect for new investors looking to start their investment journey.</p>
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <span class="text-gray-500 text-sm">Min. Investment</span>
+                        <div class="text-2xl font-bold">₹1,000</div>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 text-sm">Expected ROI</span>
+                        <div class="text-2xl font-bold text-green-600">8%</div>
+                    </div>
+                </div>
+                <a href="{{ url_for('auth.register') }}" class="block text-center bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition shadow">Get Started</a>
+            </div>
+            
+            <div class="bg-white p-8 rounded-lg shadow-lg transform transition-all duration-300 hover:shadow-2xl border border-gray-100 md:-translate-y-4">
+                <div class="bg-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center font-bold text-2xl mb-6 mx-auto">G</div>
+                <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
+                <h3 class="text-xl font-bold mb-4 text-center">Growth Package</h3>
+                <p class="text-gray-600 mb-6 text-center">Designed for investors seeking substantial medium-term growth.</p>
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <span class="text-gray-500 text-sm">Min. Investment</span>
+                        <div class="text-2xl font-bold">₹5,000</div>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 text-sm">Expected ROI</span>
+                        <div class="text-2xl font-bold text-green-600">12%</div>
+                    </div>
+                </div>
+                <a href="{{ url_for('auth.register') }}" class="block text-center bg-blue-700 text-white py-3 px-6 rounded-lg hover:bg-blue-800 transition shadow">Get Started</a>
+            </div>
+            
+            <div class="bg-white p-8 rounded-lg shadow-lg transition-all duration-300 hover:shadow-2xl border border-gray-100">
+                <div class="bg-blue-800 text-white w-16 h-16 rounded-full flex items-center justify-center font-bold text-2xl mb-6 mx-auto">P</div>
+                <h3 class="text-xl font-bold mb-4 text-center">Premium Package</h3>
+                <p class="text-gray-600 mb-6 text-center">Our premium offering for serious investors seeking maximum returns.</p>
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <span class="text-gray-500 text-sm">Min. Investment</span>
+                        <div class="text-2xl font-bold">₹10,000</div>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 text-sm">Expected ROI</span>
+                        <div class="text-2xl font-bold text-green-600">15%</div>
+                    </div>
+                </div>
+                <a href="{{ url_for('auth.register') }}" class="block text-center bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition shadow">Get Started</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-center mb-10">What Our Investors Say</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-8 rounded-lg shadow-lg relative">
+                <div class="absolute -top-6 left-8">
+                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold">J</div>
+                </div>
+                <div class="pt-6">
+                    <div class="flex items-center mb-4">
+                        <h4 class="font-bold">John Smith</h4>
+                        <div class="text-yellow-500 ml-2">★★★★★</div>
+                    </div>
+                    <p class="text-gray-600 italic">"I've been investing with BrokerPlatform for two years now. The returns have been consistently great, and the platform is so easy to use."</p>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-lg relative">
+                <div class="absolute -top-6 left-8">
+                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold">M</div>
+                </div>
+                <div class="pt-6">
+                    <div class="flex items-center mb-4">
+                        <h4 class="font-bold">Maria Rodriguez</h4>
+                        <div class="text-yellow-500 ml-2">★★★★★</div>
+                    </div>
+                    <p class="text-gray-600 italic">"As a first-time investor, I was nervous about getting started. The team at BrokerPlatform made the process easy and the returns have exceeded my expectations."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to action -->
+    <div class="bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl shadow-2xl overflow-hidden">
+        <div class="p-12 text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready to Start Investing?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">Join thousands of satisfied investors and start growing your wealth today.</p>
+            <a href="{{ url_for('auth.register') }}" class="inline-block bg-white hover:bg-gray-100 text-blue-700 font-bold py-3 px-8 rounded-lg transition shadow-md">Create an Account</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
